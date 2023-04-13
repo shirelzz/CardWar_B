@@ -8,6 +8,7 @@
 namespace ariel{}
 using namespace std;
 #include<iostream>
+using std::vector;
 
 class Game{
 
@@ -16,15 +17,16 @@ class Game{
         Player player1;
         Player player2;
 
-        void shuffleDeck();
+        vector<Card> deck;
+
+        void shuffleDeck(vector<Card> cards);
+
+        void createDeck();
 
         void dealCards(std::vector<Card> deck_of_cards);
 
 
     public:
-
-        std::vector<Card> deck;
-
 
         // Non-default constructor
         Game(Player pla1, Player pla2 );
@@ -59,6 +61,9 @@ class Game{
         void printLastTurn();
 
         void playAll();
+
+        vector<Card> getDeck();
+
 
 };
 #endif

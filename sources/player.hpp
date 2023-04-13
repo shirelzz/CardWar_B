@@ -12,10 +12,14 @@ class Player{
     private:
 
         const std::string name;
+        static int id;
+        const int current_id;
         std::vector<Card> cards;
         std::vector<Card> cards_thrown;
         std::vector<Card> cards_taken;
         bool isPlaying = false;
+
+        void dealCards_pl(vector<Card> cards, int start , int end);
 
 
     public:
@@ -46,6 +50,8 @@ class Player{
 
         bool getMode();
 
+        bool equals(Player player);
+
         int stacksize();
 
         int cardesTaken();
@@ -53,6 +59,13 @@ class Player{
         Card putCard();
 
         void takeCard(Card card_taken);
+
+        int getID();
+
+        friend class Game;        
+
+
+
 
 
 };

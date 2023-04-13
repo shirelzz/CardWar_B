@@ -7,7 +7,8 @@ namespace ariel{}
 #include <iostream>
 
 
-Player::Player(std::string name): name(name) {}
+Player::Player(std::string name): name(name) , current_id(id++){}
+
 // Player::Player(const Player& other) {}
 
 // Player::~Player(){}
@@ -34,4 +35,26 @@ Card Player::putCard(){
 void Player::takeCard(Card card_taken){
     cards_taken.push_back(card_taken);
 }
+
+int Player::getID(){
+    return this->current_id;
+}
+
+bool Player::equals(Player player){
+    if (this->getID() == player.getID() )
+    {
+        return true;
+    }
+    return false;
+    
+}
+
+void Player::dealCards_pl(vector<Card> cards_, int start , int end){
+    for (int i = start; i < end; i++)
+    {
+        this->cards.push_back(cards_[i]);
+    }
+    
+}
+
 

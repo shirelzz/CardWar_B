@@ -2,7 +2,7 @@
 #define CARD_HPP
 
 namespace ariel{}
-// using namespace std;
+using namespace std;
 #include <iostream>
 
 class Card{
@@ -13,12 +13,14 @@ class Card{
     std::string shape;
 
     // Non-default Constructor
-    Card(int number, std::string shp);
 
 
     public:
 
-        void createCard(int number, std::string shp);
+        Card(int number, std::string shp);
+
+
+        // void createCard(int number, std::string shp);
 
         // Default constructor
         // Card() = default;
