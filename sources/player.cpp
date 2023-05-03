@@ -1,13 +1,19 @@
 #include "player.hpp"
 #include "game.hpp"
 #include "card.hpp"
-namespace ariel{}
-
 #include <vector>
 #include <iostream>
 
+namespace ariel{}
+using namespace std;
 
-Player::Player(std::string name): name(name) , current_id(id++){}
+
+
+Player::Player(std::string name):
+        name(name) , cards(), cards_thrown(), cards_taken()
+{
+    this->isPlaying = false;
+}
 
 // Player::Player(const Player& other) {}
 
@@ -22,26 +28,27 @@ bool Player::getMode(){
     return this->isPlaying;
     }
 
-int Player::stacksize(){return this->cards.size();}
+int Player::stacksize(){
+    return static_cast<int>(this->cards.size());
+}
 
 int Player::cardesTaken(){return this->cards_taken.size();}
 
 Card Player::putCard(){
+
     Card card = cards[0];
     this->cards.erase(cards.begin());
     return card;
 }
 
 void Player::takeCard(Card card_taken){
+
     cards_taken.push_back(card_taken);
 }
 
-int Player::getID(){
-    return this->current_id;
-}
-
 bool Player::equals(Player player){
-    if (this->getID() == player.getID() )
+
+    if (this->name == player.name )
     {
         return true;
     }
@@ -49,12 +56,9 @@ bool Player::equals(Player player){
     
 }
 
-void Player::dealCards_pl(vector<Card> cards_, int start , int end){
-    for (int i = start; i < end; i++)
-    {
-        this->cards.push_back(cards_[i]);
-    }
-    
+std::vector<Card> Player::getStack(){
+    return this->cards;
 }
+
 
 

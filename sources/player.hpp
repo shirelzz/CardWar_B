@@ -2,7 +2,6 @@
 #define PLAYER_HPP
 
 namespace ariel{}
-// using namespace std;
 #include <vector>
 #include "card.hpp"
 #include <iostream>
@@ -12,15 +11,10 @@ class Player{
     private:
 
         const std::string name;
-        static int id;
-        const int current_id;
         std::vector<Card> cards;
         std::vector<Card> cards_thrown;
         std::vector<Card> cards_taken;
         bool isPlaying = false;
-
-        void dealCards_pl(vector<Card> cards, int start , int end);
-
 
     public:
 
@@ -60,12 +54,10 @@ class Player{
 
         void takeCard(Card card_taken);
 
-        int getID();
-
-        friend class Game;        
+        std::vector<Card> getStack();
 
 
-
+    friend class Game;        
 
 
 };

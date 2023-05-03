@@ -1,14 +1,24 @@
 #include "card.hpp"
 #include "game.hpp"
 #include "player.hpp"
-namespace ariel{}
-
 #include <vector>
 #include <iostream>
 
+namespace ariel{}
+
+using namespace std;
 
 
-    Card::Card(int number, std::string shp) : num(number), shape(shp){}
+Card::Card(int val, std::string shp) : value(val), shape(shp){
+    this->value = val;
+    this->shape = shp;
+}
+
+void Card::printCard(){
+    cout << this->value << endl;
+    cout << this->shape << endl;
+
+}
 
     // void Card::createCard(int number, std::string shp){
 

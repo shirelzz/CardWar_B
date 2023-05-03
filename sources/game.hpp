@@ -4,10 +4,9 @@
 #include <vector>
 #include "card.hpp"
 #include "player.hpp"
+#include<iostream>
 
 namespace ariel{}
-using namespace std;
-#include<iostream>
 using std::vector;
 
 class Game{
@@ -19,11 +18,13 @@ class Game{
 
         vector<Card> deck;
 
-        void shuffleDeck(vector<Card> cards);
+        void shuffleDeck();
 
         void createDeck();
 
-        void dealCards(std::vector<Card> deck_of_cards);
+        void dealCards();
+
+        void swap(int idx, int rnd);
 
 
     public:
@@ -64,6 +65,8 @@ class Game{
 
         vector<Card> getDeck();
 
+
+    friend class Player;        
 
 };
 #endif
