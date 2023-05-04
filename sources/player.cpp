@@ -9,15 +9,11 @@ using namespace std;
 
 
 
-Player::Player(std::string name):
-        name(name) , cards(), cards_thrown(), cards_taken()
+Player::Player(std::string name): name(name)
 {
+    this->name = name;
     this->isPlaying = false;
 }
-
-// Player::Player(const Player& other) {}
-
-// Player::~Player(){}
 
 void Player::changeMode(){
    bool temp =  this->getMode();
@@ -32,21 +28,23 @@ int Player::stacksize(){
     return static_cast<int>(this->cards.size());
 }
 
-int Player::cardesTaken(){return this->cards_taken.size();}
+int Player::cardesTaken(){
+    return this->cards_taken.size();
+}
 
-Card Player::putCard(){
+Card& Player::putCard(){
 
-    Card card = cards[0];
+    Card &card = cards[0];
     this->cards.erase(cards.begin());
     return card;
 }
 
-void Player::takeCard(Card card_taken){
+void Player::takeCard(Card &card_taken){
 
     cards_taken.push_back(card_taken);
 }
 
-bool Player::equals(Player player){
+bool Player::equals(Player &player){
 
     if (this->name == player.name )
     {
@@ -58,6 +56,15 @@ bool Player::equals(Player player){
 
 std::vector<Card> Player::getStack(){
     return this->cards;
+}
+
+void Player::addToStack(Card &card){
+    this->cards.push_back(card);
+}
+
+std::string Player::getName()
+{
+    return name;
 }
 
 

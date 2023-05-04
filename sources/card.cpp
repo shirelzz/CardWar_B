@@ -20,16 +20,32 @@ void Card::printCard(){
 
 }
 
-    // void Card::createCard(int number, std::string shp){
+int Card::getValue(){
+    return this->value;
+}
 
-    //     if (number <=13 && number>=1 && 
-    //         (shp == "Clubs" || shp == "Diamonds" || shp == "Hearts" || shp == "Spades"))
-    //     {
-    //         new Card(number, shp);
-    //     }
-        
-    // }
+std::string Card::getShape(){
+    return this->shape;
+}
 
-    // Card::Card(){}
-
-    // Card::~Card(){}
+bool Card::wins(Card &other){
+    if (other.getValue() == 1 && this->getValue() == 2){
+        return true;
+    }
+    else if (other.getValue() == 2 && this->getValue() == 1){
+        return false;
+    }
+    else if (other.getValue() != 2 && this->getValue() == 1){
+        return true;
+    }
+    else if (other.getValue() == 1 && this->getValue() != 2){
+        return false;
+    }
+    else if (other.getValue() > this->getValue()){
+        return false;
+    }
+    else if (other.getValue() < this->getValue()){
+        return true;
+    }
+    return false;
+}

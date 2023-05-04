@@ -7,16 +7,19 @@
 #include<iostream>
 
 namespace ariel{}
-using std::vector;
 
 class Game{
 
     private:
+        
+        // friend class Player;         
 
-        Player player1;
-        Player player2;
+        Player &player1;
+        Player &player2;
 
-        vector<Card> deck;
+        std::vector<Card> deck;
+        std::string log;
+        std::string lastTurn;
 
         void shuffleDeck();
 
@@ -24,32 +27,10 @@ class Game{
 
         void dealCards();
 
-        void swap(int idx, int rnd);
-
 
     public:
 
-        // Non-default constructor
-        Game(Player pla1, Player pla2 );
-
-        // Default constructor
-        // Game() = default;
-
-        // Copy constructor
-        // Game(const Game& other) = default;
-
-        // Copy assignment operator
-        // Game& operator=(const Game& other) = default;
-
-        // Move constructor
-        // Game(Game&& other) noexcept = default;
-
-        // Move assignment operator
-        // Game& operator=(Game&& other) noexcept = default;
-
-        // Destructor
-        //caused problems with tidy. will fix later
-        // ~Game();
+        Game(Player &pl1, Player &pl2 );
 
         void printWiner(); 
 
@@ -63,10 +44,8 @@ class Game{
 
         void playAll();
 
-        vector<Card> getDeck();
+        std::vector<Card> getDeck();
 
-
-    friend class Player;        
 
 };
 #endif

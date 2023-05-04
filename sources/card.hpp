@@ -20,6 +20,12 @@ class Card{
 
         void printCard();
 
+        int getValue();
+
+        std::string getShape();
+
+        bool wins(Card &other);
+
 
         // void createCard(int number, std::string shp);
 
