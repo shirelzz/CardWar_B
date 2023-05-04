@@ -87,13 +87,16 @@ void Game::playTurn(){
 
     if (pl1_card.wins(pl2_card))
     {
+
         player1.takeCard(pl2_card);
+        player1.takeCard(pl1_card);
         lastTurn += player1.getName() + " wins. \n";
         log += lastTurn;
     }
     else if (pl2_card.wins(pl1_card))
     {
         player2.takeCard(pl1_card);
+        player2.takeCard(pl2_card);
         lastTurn += player2.getName() + " wins. \n";
         log += lastTurn;
 
@@ -101,26 +104,35 @@ void Game::playTurn(){
     else{
 
         std::vector<Card> cardsThrown;
+
+        cardsThrown.push_back(pl1_card);
+        cardsThrown.push_back(pl2_card);
+
         bool won = false;
-        while (!won)
+        while (!won && player1.stacksize() > 0 && player2.stacksize() > 0)
         {
-            Card pl1_card_hid = player1.putCard();
-            Card pl2_card_hid = player2.putCard();
+            if (player1.stacksize() > 1 && player2.stacksize() > 1)
+            {
+                Card pl1_card_hid = player1.putCard();
+                Card pl2_card_hid = player2.putCard();
+                cardsThrown.push_back(pl1_card_hid);
+                cardsThrown.push_back(pl2_card_hid);
+            }
+            
             Card pl1_card_shw = player1.putCard();
             Card pl2_card_shw = player2.putCard();
 
             lastTurn += "Draw. " + player1.getName() + " played " + std::to_string(pl1_card_shw.getValue()) + " of " + pl1_card_shw.getShape() + ". " +
                 player2.getName() + " played " + std::to_string(pl2_card_shw.getValue()) + " of " + pl2_card_shw.getShape() + ".";
 
-            cardsThrown.push_back(pl1_card_hid);
-            cardsThrown.push_back(pl2_card_hid);
+
             cardsThrown.push_back(pl1_card_shw);
             cardsThrown.push_back(pl2_card_shw);
 
             if (pl1_card_shw.wins(pl2_card_shw))
             {
                 won = true;
-                lastTurn += player1.getName() + "wins. \n";
+                lastTurn += player1.getName() + " wins. \n";
                 log += lastTurn;
 
                 for (size_t i = 0; i < cardsThrown.size(); i++)
@@ -129,12 +141,12 @@ void Game::playTurn(){
                     cardsThrown.erase(cardsThrown.begin());
                 }
 
-                break;
+                // break;
             }
             else if (pl2_card_shw.wins(pl1_card_shw))
             {
                 won = true;
-                lastTurn += player2.getName() + "wins. \n";
+                lastTurn += player2.getName() + " wins. \n";
                 log += lastTurn;
 
                 for (size_t i = 0; i < cardsThrown.size(); i++)
@@ -143,7 +155,7 @@ void Game::playTurn(){
                     cardsThrown.erase(cardsThrown.begin());
                 }
                 
-                break;
+                // break;
             }
 
 
