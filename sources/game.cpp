@@ -43,27 +43,29 @@ Game::Game(Player &pl1, Player &pl2 ):
 void Game::printWiner(){
     if (player1.cardesTaken() > player2.cardesTaken() )
     {
-        cout << player1.getName() << endl;
+        cout << "The winner is: "<< player1.getName() << endl;
     }
     else if (player1.cardesTaken() < player2.cardesTaken() )
     {
-        cout << player2.getName() << endl;
+        cout << "The winner is: " << player2.getName() << endl;
     }
     else{
-        cout << "Tie." << endl;
+        cout << "The game ended in tie." << endl;
     }
     
 }
 
 void Game::printLog(){
-    cout << log << endl;
+    cout << "------LOG------ \n" << log << endl;
+    cout << "----END LOG---- \n" << endl;
 }
 
 void Game::printStats(){
     std::string stats = player1.getName() + ": Cards won: " + std::to_string(player1.cardesTaken()) + ". Stack size: " + std::to_string(player1.stacksize()) + "\n" +
                         player2.getName() + ": Cards won: " + std::to_string(player2.cardesTaken()) + ". Stack size: " + std::to_string(player2.stacksize());
-    cout << stats << endl;
+    cout << "------STATS------ \n" << stats << endl;
     printWiner();
+    cout << "----END STATS---- \n" << endl;
 }
 
 void Game::playTurn(){
@@ -122,8 +124,8 @@ void Game::playTurn(){
             Card pl1_card_shw = player1.putCard();
             Card pl2_card_shw = player2.putCard();
 
-            lastTurn += "Draw. " + player1.getName() + " played " + std::to_string(pl1_card_shw.getValue()) + " of " + pl1_card_shw.getShape() + ". " +
-                player2.getName() + " played " + std::to_string(pl2_card_shw.getValue()) + " of " + pl2_card_shw.getShape() + ".";
+            lastTurn += "Draw. " +  player1.getName() + " played " + std::to_string(pl1_card_shw.getValue()) + " of " + pl1_card_shw.getShape() + ". " +
+                                    player2.getName() + " played " + std::to_string(pl2_card_shw.getValue()) + " of " + pl2_card_shw.getShape() + ". ";
 
 
             cardsThrown.push_back(pl1_card_shw);
@@ -135,8 +137,10 @@ void Game::playTurn(){
                 lastTurn += player1.getName() + " wins. \n";
                 log += lastTurn;
 
-                for (size_t i = 0; i < cardsThrown.size(); i++)
+                size_t count = cardsThrown.size();
+                for (size_t i = 0; i < count; i++)
                 {
+                    cout << "cardsThrown.size() = " << cardsThrown.size() << endl;
                     player1.takeCard(cardsThrown[0]);
                     cardsThrown.erase(cardsThrown.begin());
                 }
@@ -146,11 +150,13 @@ void Game::playTurn(){
             else if (pl2_card_shw.wins(pl1_card_shw))
             {
                 won = true;
-                lastTurn += player2.getName() + " wins. \n";
+                lastTurn += " " + player2.getName() + " wins. \n";
                 log += lastTurn;
 
-                for (size_t i = 0; i < cardsThrown.size(); i++)
+                size_t count = cardsThrown.size();
+                for (size_t i = 0; i < count; i++)
                 {
+                    cout << "cardsThrown.size() = " << cardsThrown.size() << endl;
                     player2.takeCard(cardsThrown[0]);
                     cardsThrown.erase(cardsThrown.begin());
                 }
