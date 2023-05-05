@@ -11,6 +11,7 @@ namespace ariel{}
 #include <algorithm>
 #include <random>
 
+
 using namespace std;
 using std::vector;
 using std::string;
@@ -25,10 +26,6 @@ Game::Game(Player &pl1, Player &pl2 ):
     if(pl2.getMode()){
         throw std::runtime_error("Player 2 is already playing");
     }
- 
-    
-    pl1.changeMode();
-    pl2.changeMode();
 
     deck = std::vector<Card>();
     log = "";
@@ -37,6 +34,12 @@ Game::Game(Player &pl1, Player &pl2 ):
     createDeck();
     shuffleDeck();
     dealCards();
+
+    pl1.changeMode();
+    pl2.changeMode();
+
+    draws = 0;
+    turnsPlayed = 0;
 }
 
 
@@ -56,16 +59,28 @@ void Game::printWiner(){
 }
 
 void Game::printLog(){
-    cout << "------LOG------ \n" << log << endl;
-    cout << "----END LOG---- \n" << endl;
+    cout << "----------------LOG---------------- \n \n" << log << endl;
+    cout << "--------------END LOG-------------- \n" << endl;
 }
 
 void Game::printStats(){
-    std::string stats = player1.getName() + ": Cards won: " + std::to_string(player1.cardesTaken()) + ". Stack size: " + std::to_string(player1.stacksize()) + "\n" +
-                        player2.getName() + ": Cards won: " + std::to_string(player2.cardesTaken()) + ". Stack size: " + std::to_string(player2.stacksize());
-    cout << "------STATS------ \n" << stats << endl;
+    double pl1_win_rate = (double)(player1.cardesTaken()) / (double)(52) * 100;
+    pl1_win_rate = round(pl1_win_rate);
+    double pl2_win_rate = (double)(player2.cardesTaken()) / (double)(52) * 100;
+    pl2_win_rate = round(pl2_win_rate);
+    double draw_rate = (double)(draws) / (double)(turnsPlayed) * 100;
+    draw_rate = round(draw_rate);
+
+    std::string stats = player1.getName() + ": \nCards won: " + std::to_string(player1.cardesTaken()) + ". Stack size: " + std::to_string(player1.stacksize()) +
+                        ". Winning rate: " + std::to_string((int)(pl1_win_rate)) + "%.\n \n" +
+                        player2.getName() + ": \nCards won: " + std::to_string(player2.cardesTaken()) + ". Stack size: " + std::to_string(player2.stacksize()) +
+                        ". Winning rate: " + std::to_string((int)(pl2_win_rate)) + "%.\n \n" +
+                        "Amount of draws: " + std::to_string(draws) + ". Number of turns played: " + std::to_string(turnsPlayed) +
+                        ". Draw rate: " + std::to_string((int)(draw_rate)) + "%";
+
+    cout << "--------------STATS-------------- \n" << stats << "\n" << endl;
     printWiner();
-    cout << "----END STATS---- \n" << endl;
+    cout << "------------END STATS------------ \n" << endl;
 }
 
 void Game::playTurn(){
@@ -80,6 +95,8 @@ void Game::playTurn(){
         throw std::runtime_error("Empty stack");
 
     }
+
+    turnsPlayed++;
 
     Card pl1_card = player1.putCard();
     Card pl2_card = player2.putCard();
@@ -113,6 +130,8 @@ void Game::playTurn(){
             lastTurn += "Last turn ended in tie. ";
             log += lastTurn;
 
+            draws++;
+
             return;
         }
 
@@ -126,6 +145,8 @@ void Game::playTurn(){
         bool won = false;
         while (!won && player1.stacksize() > 0 && player2.stacksize() > 0)
         {
+            draws++;
+
             if (player1.stacksize() == 1 && player2.stacksize() == 1)
             {
                 Card lastCard1 = player1.putCard();
@@ -233,6 +254,10 @@ void Game::playAll(){
         }
         
     }
+
+    player1.changeMode();
+    player2.changeMode();
+
     
 }
 

@@ -20,6 +20,8 @@ class Game{
         std::vector<Card> deck;
         std::string log;
         std::string lastTurn;
+        int draws;
+        int turnsPlayed;
 
         void shuffleDeck();
 
