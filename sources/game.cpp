@@ -89,7 +89,6 @@ void Game::playTurn(){
 
     if (pl1_card.wins(pl2_card))
     {
-
         player1.takeCard(pl2_card);
         player1.takeCard(pl1_card);
         lastTurn += player1.getName() + " wins. \n";
@@ -105,72 +104,109 @@ void Game::playTurn(){
     }
     else{
 
+        if (player1.stacksize() == 0 && player2.stacksize() == 0) // The cards now thrown were the last
+        {
+            // Each player takes ("wins") his card back
+            player1.takeCard(pl1_card);
+            player2.takeCard(pl2_card);
+
+            lastTurn += "Last turn ended in tie. ";
+            log += lastTurn;
+
+            return;
+        }
+
+        // Create a new stack for the cards thrown in this specific war
         std::vector<Card> cardsThrown;
-
+        // Add the first 2 cards that were thrown
         cardsThrown.push_back(pl1_card);
-        cardsThrown.push_back(pl2_card);
+        cardsThrown.push_back(pl2_card);        
 
+        int iter = 0;
         bool won = false;
         while (!won && player1.stacksize() > 0 && player2.stacksize() > 0)
         {
-            if (player1.stacksize() > 1 && player2.stacksize() > 1)
+            if (player1.stacksize() == 1 && player2.stacksize() == 1)
             {
-                Card pl1_card_hid = player1.putCard();
-                Card pl2_card_hid = player2.putCard();
-                cardsThrown.push_back(pl1_card_hid);
-                cardsThrown.push_back(pl2_card_hid);
+                Card lastCard1 = player1.putCard();
+                Card lastCard2 = player2.putCard();
+                player1.takeCard(lastCard1);
+                player2.takeCard(lastCard2);
+
+                if (iter == 0)
+                {
+                    player1.takeCard(pl1_card);
+                    player2.takeCard(pl2_card);
+                }
+
+                lastTurn += "1 card left for each player. Last turn. ";
+                log += lastTurn;
+                break;
             }
             
+            Card pl1_card_hid = player1.putCard();
+            Card pl2_card_hid = player2.putCard();
             Card pl1_card_shw = player1.putCard();
             Card pl2_card_shw = player2.putCard();
 
-            lastTurn += "Draw. " +  player1.getName() + " played " + std::to_string(pl1_card_shw.getValue()) + " of " + pl1_card_shw.getShape() + ". " +
-                                    player2.getName() + " played " + std::to_string(pl2_card_shw.getValue()) + " of " + pl2_card_shw.getShape() + ". ";
-
-
             cardsThrown.push_back(pl1_card_shw);
             cardsThrown.push_back(pl2_card_shw);
+            cardsThrown.push_back(pl1_card_hid);
+            cardsThrown.push_back(pl2_card_hid);
 
-            if (pl1_card_shw.wins(pl2_card_shw))
+            lastTurn += "Draw. \n" +  player1.getName() + " played " + std::to_string(pl1_card_shw.getValue()) + " of " + pl1_card_shw.getShape() + ". " +
+                                    player2.getName() + " played " + std::to_string(pl2_card_shw.getValue()) + " of " + pl2_card_shw.getShape() + ". ";
+
+            if (pl1_card_shw.wins(pl2_card_shw)) // Player1 won
             {
                 won = true;
                 lastTurn += player1.getName() + " wins. \n";
                 log += lastTurn;
 
+                // Player1 takes all cards thrown
                 size_t count = cardsThrown.size();
                 for (size_t i = 0; i < count; i++)
                 {
-                    cout << "cardsThrown.size() = " << cardsThrown.size() << endl;
                     player1.takeCard(cardsThrown[0]);
                     cardsThrown.erase(cardsThrown.begin());
                 }
-
-                // break;
             }
-            else if (pl2_card_shw.wins(pl1_card_shw))
+            else if (pl2_card_shw.wins(pl1_card_shw)) // Player2 won
             {
                 won = true;
-                lastTurn += " " + player2.getName() + " wins. \n";
+                lastTurn +=  player2.getName() + " wins. \n";
                 log += lastTurn;
 
-                size_t count = cardsThrown.size();
+                // Player2 takes all cards thrown
+                size_t count = cardsThrown.size(); 
                 for (size_t i = 0; i < count; i++)
                 {
-                    cout << "cardsThrown.size() = " << cardsThrown.size() << endl;
                     player2.takeCard(cardsThrown[0]);
                     cardsThrown.erase(cardsThrown.begin());
                 }
-                
-                // break;
             }
-
-
-        }
-        
-        
+            iter++;
+        } 
+        if (cardsThrown.size() > 0 && (player1.cardesTaken() == player2.cardesTaken()) && iter > 0) // If the game ended in a tie during the war
+                                                                                                   // (stacks are empty because we got out of the loop).
+        {
+            // Each player takes ("wins") his cards back
+            size_t count = cardsThrown.size(); 
+            for (size_t i = 0; i < count; i++)
+            {
+                if (i%2 == 0)
+                {
+                    player1.takeCard(cardsThrown[0]);
+                }
+                else{
+                    player2.takeCard(cardsThrown[0]);
+                }
+                cardsThrown.erase(cardsThrown.begin());
+            }
+            lastTurn = " Each player takes his cards back (from cards thrown)";
+            log += lastTurn;
+        }       
     }
-
-
 }
 
 void Game::printLastTurn(){

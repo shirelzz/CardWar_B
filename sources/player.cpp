@@ -32,9 +32,9 @@ int Player::cardesTaken(){
     return this->cards_taken.size();
 }
 
-Card& Player::putCard(){
+Card Player::putCard(){
 
-    Card &card = cards[0];
+    Card card = cards[0];
     this->cards.erase(cards.begin());
     return card;
 }

@@ -14,7 +14,6 @@ class Player{
 
         std::string name;
         std::vector<Card> cards;
-        std::vector<Card> cards_thrown;
         std::vector<Card> cards_taken;
         bool isPlaying;
 
@@ -33,7 +32,7 @@ class Player{
 
         int cardesTaken();
 
-        Card& putCard();
+        Card putCard();
 
         void takeCard(Card &card_taken);
 
