@@ -42,6 +42,8 @@ class Player{
 
         std::string getName();
 
+        void resetWins(); //clears the cards taken list
+
 
 };
 #endif

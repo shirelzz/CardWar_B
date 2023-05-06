@@ -38,6 +38,9 @@ Game::Game(Player &pl1, Player &pl2 ):
     pl1.changeMode();
     pl2.changeMode();
 
+    pl1.resetWins();
+    pl2.resetWins();
+
     draws = 0;
     turnsPlayed = 0;
 }
@@ -68,8 +71,12 @@ void Game::printStats(){
     pl1_win_rate = round(pl1_win_rate);
     double pl2_win_rate = (double)(player2.cardesTaken()) / (double)(52) * 100;
     pl2_win_rate = round(pl2_win_rate);
-    double draw_rate = (double)(draws) / (double)(turnsPlayed) * 100;
-    draw_rate = round(draw_rate);
+    double draw_rate = 0;
+    if(draws != 0){
+        draw_rate = (double)(draws) / (double)(turnsPlayed) * 100;
+        draw_rate = round(draw_rate);
+    }
+    
 
     std::string stats = player1.getName() + ": \nCards won: " + std::to_string(player1.cardesTaken()) + ". Stack size: " + std::to_string(player1.stacksize()) +
                         ". Winning rate: " + std::to_string((int)(pl1_win_rate)) + "%.\n \n" +
@@ -238,7 +245,7 @@ void Game::playAll(){
 
     if (player1.stacksize() == 0 || player2.stacksize() == 0)
     {
-        throw std::runtime_error("Empty stack");
+        throw std::runtime_error("Empty stack - game over");
     }
 
     while (true)

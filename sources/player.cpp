@@ -18,7 +18,8 @@ Player::Player(std::string name): name(name)
 void Player::changeMode(){
    bool temp =  this->getMode();
    this->isPlaying = !temp;
-} //change isPlaying field
+
+} //change isPlaying field and reset cards taken
 
 bool Player::getMode(){
     return this->isPlaying;
@@ -65,6 +66,10 @@ void Player::addToStack(Card &card){
 std::string Player::getName()
 {
     return name;
+}
+
+void Player::resetWins(){
+    this->cards_taken.clear();
 }
 
 
