@@ -12,8 +12,6 @@ class Game{
 
     private:
         
-        // friend class Player;         
-
         Player &player1;
         Player &player2;
 
@@ -23,11 +21,11 @@ class Game{
         int draws;
         int turnsPlayed;
 
-        void shuffleDeck();
+        void createDeck(); // creates a deck of cards for the game
 
-        void createDeck();
+        void shuffleDeck(); // shuffles the deck
 
-        void dealCards();
+        void dealCards(); // deal cards to the players
 
 
     public:
@@ -47,7 +45,6 @@ class Game{
         void playAll();
 
         std::vector<Card> getDeck();
-
 
 };
 #endif

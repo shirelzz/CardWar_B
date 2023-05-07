@@ -8,7 +8,6 @@ namespace ariel{}
 using namespace std;
 
 
-
 Player::Player(std::string name): name(name)
 {
     this->name = name;
@@ -16,17 +15,15 @@ Player::Player(std::string name): name(name)
 }
 
 void Player::changeMode(){
-   bool temp =  this->getMode();
-   this->isPlaying = !temp;
-
-} //change isPlaying field and reset cards taken
+    this->isPlaying = !(this->getMode());
+}
 
 bool Player::getMode(){
     return this->isPlaying;
     }
 
 int Player::stacksize(){
-    return static_cast<int>(this->cards.size());
+    return this->cards.size();
 }
 
 int Player::cardesTaken(){
@@ -34,20 +31,18 @@ int Player::cardesTaken(){
 }
 
 Card Player::putCard(){
-
     Card card = cards[0];
     this->cards.erase(cards.begin());
     return card;
 }
 
 void Player::takeCard(Card &card_taken){
-
     cards_taken.push_back(card_taken);
 }
 
 bool Player::equals(Player &player){
 
-    if (this->name == player.name )
+    if (this->name == player.name)
     {
         return true;
     }

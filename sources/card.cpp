@@ -28,7 +28,9 @@ std::string Card::getShape(){
     return this->shape;
 }
 
+// Game rules: 1 wins every card but 2
 bool Card::wins(Card &other){
+
     if (other.getValue() == 1 && this->getValue() == 2){
         return true;
     }

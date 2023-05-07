@@ -11,7 +11,6 @@ namespace ariel{}
 #include <algorithm>
 #include <random>
 
-
 using namespace std;
 using std::vector;
 using std::string;
@@ -47,6 +46,7 @@ Game::Game(Player &pl1, Player &pl2 ):
 
 
 void Game::printWiner(){
+
     if (player1.cardesTaken() > player2.cardesTaken() )
     {
         cout << "The winner is: "<< player1.getName() << endl;
@@ -126,7 +126,7 @@ void Game::playTurn(){
         log += lastTurn;
 
     }
-    else{
+    else{ // war
 
         if (player1.stacksize() == 0 && player2.stacksize() == 0) // The cards now thrown were the last
         {
@@ -238,7 +238,7 @@ void Game::playTurn(){
 }
 
 void Game::printLastTurn(){
-    cout << lastTurn << endl;
+    cout << "Last turn was: " << lastTurn << endl;
 }
 
 void Game::playAll(){

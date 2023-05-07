@@ -13,36 +13,35 @@ class Player{
         // friend class Game;        
 
         std::string name;
-        std::vector<Card> cards;
-        std::vector<Card> cards_taken;
+        std::vector<Card> cards;  // player's stack
+        std::vector<Card> cards_taken; // player's winning cards
         bool isPlaying;
 
     public:
 
-        
         Player(std::string name);
 
-        void changeMode(); //change isPlaying field
+        void changeMode(); // change isPlaying field
 
-        bool getMode();
+        bool getMode(); // returns isPlaying field
 
-        bool equals(Player &player);
+        bool equals(Player &player); // checks if this player equals to another player
 
-        int stacksize();
+        int stacksize();  // returns the size of cards size
 
-        int cardesTaken();
+        int cardesTaken(); // returns the cards_taken size
 
-        Card putCard();
+        Card putCard();  // takes out a card from cards
 
-        void takeCard(Card &card_taken);
+        void takeCard(Card &card_taken);  // adds card to cards_taken
 
-        std::vector<Card> getStack();
+        std::vector<Card> getStack();  // returns this cards
 
-        void addToStack(Card &card);
+        void addToStack(Card &card); // adds to this cards
 
-        std::string getName();
+        std::string getName(); // returns this player's name
 
-        void resetWins(); //clears the cards taken list
+        void resetWins(); // clears the cards taken list
 
 
 };
